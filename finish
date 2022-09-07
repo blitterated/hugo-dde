@@ -1,0 +1,2 @@
+#!with-contenv execlineb
+kill -INT $(ps -ef | grep "hugo server" | grep -v "grep" | awk '{ print $2 }')
