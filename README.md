@@ -1,4 +1,4 @@
-Want to build a Hugo static site while keeping all the dev dependencies separate from your machine? This is the repo for you.
+Want to build a Hugo static site while keeping all the dev dependencies separate from your host machine? This is the repo for you.
 
 ### Features
 
