@@ -23,9 +23,9 @@ __NOTE:__ This depends on `blog/` being passed into `hugo server` with the `-s` 
 
 
 ```sh
-docker run -it --rm \
+docker run -it --rm --name hugo-docker-s6 \
            -v "$(pwd)":/blog \
-           -w /blog  --name hugo-docker-s6 \
+           -w /blog \
            -p 1313:1313 \
            s6hugo
 ```
@@ -44,4 +44,16 @@ __Starting__
 
 ```sh
 s6-rc -u change hugo
+```
+
+### Create a new hugo site
+
+It's a little hacky, but you need to override the Entrypoint and the Command on the command line. It will exit immediately after creating the new site.
+
+```sh
+docker run --rm --name hugo-new-site \
+           -v "$(pwd)":/blog \
+           -w /blog \
+           --entrypoint "" \
+           s6hugo /bin/sh -c "hugo new site site-name"
 ```
