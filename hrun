@@ -23,8 +23,7 @@ Commands:
 CMD=start
 
 # use supplied command in args if provided.
-if [[ $# -gt 0 ]]
-then
+if [[ $# -gt 0 ]]; then
   # grab the command and pop it off the arguments
   CMD=$1
   shift
@@ -32,6 +31,12 @@ fi
 
 case "$CMD" in
   start)
+    # bail with error if no config.toml found
+    if [[ ! -f "config.toml" ]]; then
+      echo "config.toml not found in current directory"
+      exit 2
+    fi
+
     docker run -it --rm --name hugo-docker-s6 \
                -v "$(pwd)":/blog \
                -w /blog \
