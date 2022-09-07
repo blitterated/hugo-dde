@@ -46,6 +46,18 @@ docker run --rm --name hugo-new-site \
 
 Both of the commands above are captured in the [`hrun`](./hrun) utility script for convenience. Just drop it somewhere in your `PATH`, and you're good to go.
 
+Since I usually have this repo available, I just link it into `/usr/local/bin`.
+
+```sh
+ln -s "$(pwd)/hrun" /usr/local/bin/hrun
+```
+
+If you're the trusting type, you can just pull it down directly from github.
+
+```sh
+(cd /usr/local/bin && curl -LO "https://raw.githubusercontent.com/blitterated/hugo-dde/master/hrun" && chmod +x hrun)
+```
+
 ### Manually stopping and starting the Hugo server in the container
 
 You shouldn't really need to do this, but sometimes the Hugo server misses a file addition. This should help.
