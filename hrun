@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+set -e
+
+export WORKDIR=$(cd $(dirname $0) && pwd)
+
+hrun_help() {
+  hrun_name=${0##*/}
+  echo "
+$hrun_name
+Hugo Docker Dev Environment Utility
+https://github.com/blitterated/hugo-dde
+Usage: $hrun_name [command]
+Commands:
+  start     Start the hugo-dde container. This is the default command if none is provided.
+  new       Create a new Hugo website. An argument for the website name is required, e.g. \"hrun new my-site\".
+  *         Help
+"
+  exit 1
+}
+
+# default to "start" command
+CMD=start
+
+# use supplied command in args if provided.
+if [[ $# -gt 0 ]]
+then
+  # grab the command and pop it off the arguments
+  CMD=$1
+  shift
+fi
+
+case "$CMD" in
+  start)
+    docker run -it --rm --name hugo-docker-s6 \
+               -v "$(pwd)":/blog \
+               -w /blog \
+               -p 1313:1313 \
+               s6hugo
+    ;;
+  new)
+    # bail to help if no site name is supplied
+    [[ $# -eq 0 ]] && hrun_help
+
+    site_name=$1
+    docker run -it --rm --name hugo-docker-s6 \
+               -v "$(pwd)":/blog \
+               -w /blog \
+               -p 1313:1313 \
+               --entrypoint "" \
+               s6hugo /bin/sh -c "hugo new site ${site_name}"
+    ;;
+  *|"")
+    hrun_help
+    ;;
+esac
