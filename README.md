@@ -11,6 +11,8 @@ Want to build a Hugo static site while keeping all the dev dependencies separate
 
 This image builds on the [Docker Dev Environment](https://github.com/blitterated/docker_dev_env) image. Make sure that one is already built and available on your host.
 
+## Usage
+
 ### Build an image
 
 ```sh
@@ -42,22 +44,6 @@ docker run --rm --name hugo-new-site \
            s6hugo /bin/sh -c "hugo new site site-name"
 ```
 
-### hrun utility
-
-Both of the commands above are captured in the [`hrun`](./hrun) utility script for convenience. Just drop it somewhere in your `PATH`, and you're good to go.
-
-Since I usually have this repo available, I just link it into `/usr/local/bin`.
-
-```sh
-ln -s "$(pwd)/hrun" /usr/local/bin/hrun
-```
-
-If you're the trusting type, you can just pull it down directly from github.
-
-```sh
-(cd /usr/local/bin && curl -LO "https://raw.githubusercontent.com/blitterated/hugo-dde/master/hrun" && chmod +x hrun)
-```
-
 ### Manually stopping and starting the Hugo server in the container
 
 You shouldn't really need to do this, but sometimes the Hugo server misses a file addition. This should help.
@@ -73,3 +59,27 @@ __Starting__
 ```sh
 s6-rc -u change hugo
 ```
+
+## Utility Scripts
+
+### hrun
+
+The commands for running the image as a server or creating a new site above are captured in the [`hrun`](./hrun) utility script for convenience. Just drop it somewhere in your `PATH`, and you're good to go.
+
+Since I usually have this repo available, I just link it into `/usr/local/bin` on the host.
+
+```sh
+ln -s "$(pwd)/hrun" /usr/local/bin/hrun
+```
+
+If you're the trusting type, you can just pull it down directly from github to the host.
+
+```sh
+(cd /usr/local/bin && curl -LO "https://raw.githubusercontent.com/blitterated/hugo-dde/master/hrun" && chmod +x hrun)
+```
+
+### bounce
+
+This execline script bounces the hugo server service. It brings the s6-rc commands for bringing the service down, and then up again.
+
+It is available in `/usr/bin/bounce` in the container. `/usr/bin` is in the container's `PATH` by default, so you can use it from the container's shell.
