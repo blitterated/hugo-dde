@@ -11,4 +11,6 @@ COPY run /etc/s6-overlay/s6-rc.d/hugo/run
 COPY finish /etc/s6-overlay/s6-rc.d/hugo/finish
 COPY hugo /etc/s6-overlay/s6-rc.d/user/contents.d/hugo
 
+COPY bounce /usr/bin/bounce
+
 CMD ["/usr/bin/env", "bash"]

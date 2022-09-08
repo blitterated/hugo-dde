@@ -1,0 +1,3 @@
+#!/command/with-contenv execlineb
+foreground { s6-rc -d change hugo }
+s6-rc -u change hugo
