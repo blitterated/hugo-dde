@@ -66,7 +66,7 @@ s6-rc -u change hugo
 
 #### hrun
 
-The commands from above for running the image as a server or creating a new site are captured in the [`hrun`](.utils/host/hrun) utility script for convenience. Just drop it somewhere in your `PATH`, and you're good to go.
+The commands from above for running the image as a server or creating a new site are captured in the [`hrun`](./utils/host/hrun) utility script for convenience. Just drop it somewhere in your `PATH`, and you're good to go.
 
 Since I usually have this repo available, I just link it into `/usr/local/bin` on the host.
 
