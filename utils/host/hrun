@@ -41,7 +41,7 @@ case "$CMD" in
                -v "$(pwd)":/blog \
                -w /blog \
                -p 1313:1313 \
-               s6hugo
+               hugo-dde
     ;;
   new)
     # bail to help if no site name is supplied
@@ -53,7 +53,7 @@ case "$CMD" in
                -w /blog \
                -p 1313:1313 \
                --entrypoint "" \
-               s6hugo /bin/sh -c "hugo new site ${site_name}"
+               hugo-dde /bin/sh -c "hugo new site ${site_name}"
     ;;
   *|"")
     hrun_help

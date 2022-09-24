@@ -8,11 +8,9 @@ RUN (cd /tmp && curl -LO "https://github.com/gohugoio/hugo/releases/download/v${
     tar -C /usr/bin -zxvf "/tmp/hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz" && \
     rm -rf /tmp/*
 
-COPY type /etc/s6-overlay/s6-rc.d/hugo/type
-COPY run /etc/s6-overlay/s6-rc.d/hugo/run
-COPY finish /etc/s6-overlay/s6-rc.d/hugo/finish
-COPY hugo /etc/s6-overlay/s6-rc.d/user/contents.d/hugo
-
-COPY bounce /usr/bin/bounce
+COPY s6-rc/type /etc/s6-overlay/s6-rc.d/hugo/type
+COPY s6-rc/run /etc/s6-overlay/s6-rc.d/hugo/run
+COPY s6-rc/finish /etc/s6-overlay/s6-rc.d/hugo/finish
+COPY s6-rc/hugo /etc/s6-overlay/s6-rc.d/user/contents.d/hugo
 
 CMD ["/usr/bin/env", "bash"]

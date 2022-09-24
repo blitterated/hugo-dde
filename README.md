@@ -16,7 +16,7 @@ This image builds on the [Docker Dev Environment](https://github.com/blitterated
 ### Build an image
 
 ```sh
-docker build -t s6hugo.
+docker build -t hugo-dde .
 ```
 
 ### Run the image
@@ -29,7 +29,7 @@ docker run -it --rm --name hugo-docker-s6 \
            -v "$(pwd)":/blog \
            -w /blog \
            -p 1313:1313 \
-           s6hugo
+           hugo-dde
 ```
 
 ### Create a new hugo site
@@ -41,7 +41,7 @@ docker run --rm --name hugo-new-site \
            -v "$(pwd)":/blog \
            -w /blog \
            --entrypoint "" \
-           s6hugo /bin/sh -c "hugo new site site-name"
+           hugo-dde /bin/sh -c "hugo new site site-name"
 ```
 
 ### Manually stopping and starting the Hugo server in the container
@@ -62,24 +62,24 @@ s6-rc -u change hugo
 
 ## Utility Scripts
 
-### hrun
+### Host
 
-The commands for running the image as a server or creating a new site above are captured in the [`hrun`](./hrun) utility script for convenience. Just drop it somewhere in your `PATH`, and you're good to go.
+#### hrun
+
+The commands from above for running the image as a server or creating a new site are captured in the [`hrun`](.utils/host/hrun) utility script for convenience. Just drop it somewhere in your `PATH`, and you're good to go.
 
 Since I usually have this repo available, I just link it into `/usr/local/bin` on the host.
 
 ```sh
-ln -s "$(pwd)/hrun" /usr/local/bin/hrun
+ln -s "$(pwd)/utils/host/hrun" /usr/local/bin/hrun
 ```
 
 If you're the trusting type, you can just pull it down directly from github to the host.
 
 ```sh
-(cd /usr/local/bin && curl -LO "https://raw.githubusercontent.com/blitterated/hugo-dde/master/hrun" && chmod +x hrun)
+(cd /usr/local/bin && curl -LO "https://raw.githubusercontent.com/blitterated/hugo-dde/master/utils/host/hrun" && chmod +x hrun)
 ```
 
-### bounce
+### Container
 
-This execline script bounces the hugo server service. It brings the s6-rc commands for bringing the service down, and then up again.
-
-It is available in `/usr/bin/bounce` in the container. `/usr/bin` is in the container's `PATH` by default, so you can use it from the container's shell.
+This image inherits [`bounce`](https://github.com/blitterated/docker_dev_env#bounce), [`path`](https://github.com/blitterated/docker_dev_env#path), and [`docker-s6-quick-exit / qb`](https://github.com/blitterated/docker_dev_env#docker-s6-quick-exit--qb) from the base  [DDE](https://github.com/blitterated/docker_dev_env) image.
